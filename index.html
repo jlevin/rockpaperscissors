@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+
+    <body>
+        <script>
+            // Gets random int between zero and max
+            function getRandomInt(max) {
+                return Math.floor(Math.random() * max);
+            }
+            // Randomly generates computer's move
+            function computerPlay() {
+                switch (getRandomInt(3)) {
+                    case 0: return "Rock";
+                    case 1: return "Paper";
+                    case 2: return "Scissors";
+                }
+            }
+            // Accepts two players moves and returns results
+            function playRound(playerSelection, computerSelection) {
+                playerSelection = playerSelection.toLowerCase();
+                computerSelection = computerSelection.toLowerCase();
+                if (playerSelection == computerSelection) {
+                    return 0;
+                } else if (playerSelection == "rock" && computerSelection == "scissors" || playerSelection == "paper" && computerSelection == "rock" || playerSelection == "scissors" && computerSelection == "paper") {
+                    return 1;
+                } else {
+                    return -1;
+                }
+            }
+            // Plays game up, ends when one player has 3 points
+            function game() {
+                
+                // initialize variables
+                let player_score = 0;
+                let computer_score = 0;
+
+                // initialize loop for whole game
+                while (player_score < 3 && computer_score < 3) {
+                    let player_move = "";
+
+                    // get player's move
+                    loop:
+                    while(true) {
+                        let response = parseInt(prompt('Enter 1 for Rock, 2 for Paper, and 3 for Scissors', 'ex: 2'));
+                        switch (response) {
+                            case 1: player_move = "Rock";
+                            break loop;
+                            case 2: player_move = "Paper";
+                            break loop;
+                            case 3: player_move = "Scissors";
+                            break loop;
+                            default: alert("please enter a valid number.");
+                        }
+                    }
+                    // get computer's move
+                    let computer_move = computerPlay();
+
+                    // play current round, increment scores, and print message to console
+                    switch (playRound(player_move, computer_move)) {
+                        case 1 : player_score++;
+                        console.log("You won this around! " + player_move + " beats " + computer_move + ". You have " + player_score + " points.  Computer has " + computer_score + " points.");
+                        break;
+                        case -1 : computer_score++;
+                        console.log("You lost this around! " + computer_move + " beats " + player_move + ". You have " + player_score + " points.  Computer has " + computer_score + " points.");
+                        break;
+                        case 0 : console.log("It was a tie! " + computer_move + " verses " + player_move + ". You have " + player_score + " points.  Computer has " + computer_score + " points.");
+                        break;
+                    }
+                }
+                console.log("Final Score:  You: " + player_score + " Computer: " + computer_score)
+            }
+        </script>
+    </body>
+</html>
